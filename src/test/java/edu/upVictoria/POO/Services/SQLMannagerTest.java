@@ -12,19 +12,21 @@ public class SQLMannagerTest extends TestCase {
     public SQLMannager sqlMannagerTest = new SQLMannager();
 
     public void testCONSOLE() {
-
+        try {
+            sqlMannagerTest.CONSOLE();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void testCREATE_DATABASE() {
-        try {
-            sqlMannagerTest.CREATE_DATABASE("Estudiantes");
-        }
-        catch (RuntimeException e){
-            throw new RuntimeException("database can't be create");
-        }
+        assertEquals(true,sqlMannagerTest.CREATE_DATABASE("Cristov"));
+        assertEquals(true,sqlMannagerTest.CREATE_DATABASE("Cristov"));
     }
 
     public void testDROP() {
+        assertEquals(true,sqlMannagerTest.DROP("Pablov"));
+        //assertEquals(false,sqlMannagerTest.DROP("cristov"));
     }
 
     public void testSELECT() {

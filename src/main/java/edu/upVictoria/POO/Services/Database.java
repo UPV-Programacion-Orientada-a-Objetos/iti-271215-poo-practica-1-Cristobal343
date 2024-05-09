@@ -1,45 +1,35 @@
 package edu.upVictoria.POO.Services;
 
+import edu.upVictoria.POO.Services.Interfaces.ISQLcreate_drop;
+import edu.upVictoria.POO.Services.Interfaces.SQLconsult;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class Database implements SQLsentences,SQLconsult{
+public class Database extends SQLMannager implements ISQLcreate_drop {
 
     private String name;
 
     private List<Table> tables;
 
+    public Database(String name){
+        this.name = name;
+        this.tables = new ArrayList<>();
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
     public void CREATE_TABLE(){
 
-    }
 
-    @Override
-    public void DROP(String name) {
 
     }
 
-    @Override
-    public void SELECT(String name) {
+    public boolean DROP_TABLE(String name) {
 
-    }
 
-    @Override
-    public void INSERT(String name) {
-
-    }
-
-    @Override
-    public void FORM() {
-
-    }
-
-    @Override
-    public void WHERE() {
-
-    }
-
-    @Override
-    public String SHOW() {
-        return null;
     }
 
 }

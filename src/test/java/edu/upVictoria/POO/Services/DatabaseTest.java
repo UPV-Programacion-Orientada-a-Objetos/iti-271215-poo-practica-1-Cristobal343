@@ -11,6 +11,7 @@ public class DatabaseTest extends TestCase {
     }
 
     public void testDROP() {
+
     }
 
     public void testSELECT() {

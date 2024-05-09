@@ -1,10 +1,14 @@
 package edu.upVictoria.POO.Services;
 
+import edu.upVictoria.POO.Services.Interfaces.ISQLcreate_drop;
+import edu.upVictoria.POO.Services.Interfaces.SQLconsult;
+
 import java.io.File;
 import java.io.IOException;
-import com.beginsecure.domain.csvreader.CsvReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
-public class Table implements SQLsentences, SQLconsult{
+public class Table extends SQLMannager implements ISQLcreate_drop, SQLconsult {
 
     public String name;
 
@@ -25,8 +29,13 @@ public class Table implements SQLsentences, SQLconsult{
     }
 
     @Override
-    public void DROP(String name) {
+    public boolean DROP(String name) {
+        try{
+            Files.deleteIfExists(Paths.get("/Desktop/"));
+        }catch (IOException e){
 
+        }
+        return true;
     }
 
     @Override
