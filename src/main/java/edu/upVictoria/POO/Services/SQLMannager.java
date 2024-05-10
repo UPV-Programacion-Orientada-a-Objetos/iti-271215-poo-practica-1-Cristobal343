@@ -1,7 +1,5 @@
 package edu.upVictoria.POO.Services;
 
-import edu.upVictoria.POO.Services.Interfaces.ISQLcreate_drop;
-
 import java.io.*;
 import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
@@ -10,15 +8,26 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLMannager implements ISQLcreate_drop {
+public class SQLMannager {
 
-    protected static String $Path = "/home/cristov/Desktop/Database/";
+    static String $Path;
 
     public static List<Database> databases = new ArrayList<>();
 
     private static BufferedReader input;
 
     private  static String consoleInput = "";
+
+    public SQLMannager (String Path){
+
+        $Path = Path;
+
+        /**
+         * Load database if this exist
+         */
+
+
+    }
 
     /**
      * El metodo CONOSOLE permite que interactues con los comando de CSQLV
@@ -108,6 +117,14 @@ public class SQLMannager implements ISQLcreate_drop {
 
     }
 
+    /**
+     * El metodo USE_DATABASE es utilizado por la case SQLMannager para
+     * selecionar una carpeta dentro de la ruta $PATH que sera usada para
+     * almacenar de archivo csv, el metodo es el omonimo del propio
+     * comando USE TABLE dentro de sql y permite hacer virtula mente lo mismo.
+     * @param name
+     * @return
+     */
     public Database USE_DATABASE(String name){
 
         boolean dbisfound = false;
@@ -141,14 +158,13 @@ public class SQLMannager implements ISQLcreate_drop {
      * @param name
      * @return
      */
-    @Override
-    public boolean DROP(String name) {
+    public boolean DROP_TABLE(String name) {
 
         boolean delDir = false;
 
         try{
 
-            Files.deleteIfExists(Paths.get(String.format("%s%s",$Path,name)));
+            Files.deleteIfExists(Paths.get(String.format("%s/%s",$Path,name)));
             delDir = true;
 
             System.out.println("Deleate sussesfull!");
@@ -168,5 +184,8 @@ public class SQLMannager implements ISQLcreate_drop {
     }
 
 
+    private void CREATE(){
+
+    }
 
 }
