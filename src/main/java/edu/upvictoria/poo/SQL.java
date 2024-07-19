@@ -1,6 +1,7 @@
 package edu.upvictoria.poo;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -22,7 +23,7 @@ public class SQL {
 
         if (query.endsWith(";")) {
 
-            String[] split = query.split("[ ,;]+");
+            String[] split = query.split("(INSERT INTO)[ ,;]+");
             List<String> iter = Arrays.asList(split);
             Iterator<String> it = iter.iterator();
 
@@ -33,6 +34,10 @@ public class SQL {
         }
 
     }
+
+    /**
+     * Sitaxis tree
+     */
 
     private final class SQLSyntaxTree {
 
@@ -64,6 +69,10 @@ public class SQL {
             else throw new SQLExeptions(String.format("%s not recognize",clause));
 
         }
+
+        /**
+         * Create class
+         */
 
         final class CREATE {
 
@@ -104,20 +113,59 @@ public class SQL {
 
                             if (openbraket.equals("(")){
 
+                                new NAME(iterQuery);
 
-                            }else throw new SQLExeptions("Do you need open ( for write arguments");
+                            } else throw new SQLExeptions("Do you need open ( for write arguments");
 
                         } else throw new SQLExeptions("Do you need write minimum one argument for create the table ");
 
                     }
 
-                    final class ARGUMENTS {
+                    final class NAME {
 
-                        private ARGUMENTS(String [] arguments) {
+                        private NAME(Iterator<String> iterQuery) throws SQLExeptions{
 
-                            for (String arg : arguments){
+                            String query = iterQuery.next();
+
+                            if (!query.contains("[()]")){
+
+                                throw new SQLExeptions("table needs attribute to be create ()");
+
+                            }
+
+                            int begin = query.indexOf("(");
+                            int end = query.indexOf(")");
+
+                            String name = query.substring(0,begin);
+
+                            String arguments = query.substring(begin,end);
+
+                            File table = new File(String.format("%s/%s.csv",pathroute,name));
+
+                            if (table.exists()){
+
+                                try {
+
+                                    table.createNewFile();
 
 
+
+                                }catch (IOException | SecurityException e){
+                                    e.printStackTrace();
+                                }finally {
+                                    System.out.printf("Table has been created");
+                                }
+
+                            }else System.err.println("Table already exists");
+
+
+                        }
+
+                        private class ARGUMENTS{
+
+                            private ARGUMENTS(Iterator<String> iterQuery) throws SQLExeptions{
+
+                                
 
                             }
 
@@ -146,7 +194,7 @@ public class SQL {
                         File directory = new File(String.format("%s",routepath));
 
                         if (directory.exists()){
-                            System.err.println("Database already exists");
+                            throw new RuntimeException("Database already exists");
                         }
                         else try {
                             directory.mkdir();
